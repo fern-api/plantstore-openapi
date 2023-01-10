@@ -1,6 +1,6 @@
 # Plant Store API OpenAPI Description
 
-This repository contains the [OpenAPI description](/openapi.yml) for [the Plant Store API](https://github.com/fern-api/plantstore-openapi).
+This repository contains the [OpenAPI description](/openapi.yml) for the [Plant Store API](https://github.com/fern-api/plantstore-openapi).
 
 ## What is OpenAPI?
 

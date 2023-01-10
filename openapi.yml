@@ -1,0 +1,301 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: 0.0.4
+paths:
+  /owner/:
+    post:
+      description: Add a new owner as a customer of the store.
+      operationId: OwnerService.add
+      tags:
+        - Owner
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantOwner'
+        '400':
+          description: ''
+      summary: add
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                age:
+                  $ref: '#/components/schemas/OwnerAge'
+                plants:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Plant'
+              required:
+                - name
+                - age
+                - plants
+            examples:
+              Example1:
+                value:
+                  name: Danny
+                  age: adult
+                  plants:
+                    - id: 309e5e64-7c5b-4433-a645-effa0683228e
+                      category:
+                        id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                        name: Dog
+                      name: Markley
+                      photoUrls:
+                        smiling: >-
+                          https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/168735118_550085559291238_7811318320849179199_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=110&_nc_ohc=RGWAh2JjszsAX-h3qUI&tn=lDBuWm7D32pYEQeN&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjU0NTYxMTczNDk4ODA5NDA2NA%3D%3D.2-ccb7-5&oh=00_AfAW97yhRaCcWwvBLK7uggaNn4SCt0-qyOZjkzmIvfR7rQ&oe=63C15AB3&_nc_sid=1527a3>
+                      status: available
+  /owner/{ownerId}:
+    post:
+      operationId: OwnerService.delete
+      tags:
+        - Owner
+      parameters:
+        - name: ownerId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/OwnerId'
+      responses:
+        '204':
+          description: ''
+      summary: delete
+      security: *ref_0
+  /plant/:
+    post:
+      description: Add a new plant to the store.
+      operationId: PlantService.add
+      tags:
+        - Plant
+      parameters: []
+      responses:
+        '204':
+          description: ''
+        '405':
+          description: ''
+      summary: add
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/PlantId'
+                category:
+                  $ref: '#/components/schemas/PlantCategory'
+                name:
+                  type: string
+                photoUrls:
+                  type: object
+                  additionalProperties:
+                    type: string
+                status:
+                  $ref: '#/components/schemas/PlantStatus'
+              required:
+                - name
+                - photoUrls
+            examples:
+              Example1:
+                value:
+                  id: 309e5e64-7c5b-4433-a645-effa0683228e
+                  category:
+                    id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                    name: Fiddle Leaf Fig
+                  name: Quadi
+                  photoUrls:
+                    growing: >-
+                      https://i.ibb.co/vk5N4C4/EDAA47-FF-6921-41-EE-ABA1-13-DE3-FCDB4-C0-1-105-c.jpg
+                  status: available
+  /plant/{plantId}:
+    get:
+      operationId: PlantService.find
+      tags:
+        - Plant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlantId'
+          examples:
+            Example1:
+              value: 309e5e64-7c5b-4433-a645-effa0683228e
+            Example2:
+              value: 971e5e64-7c5b-0033-a645-bcfe0683000b
+            Example3:
+              value: 309e5e64-7c5b-4433-a645-effa0683228e
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+              examples:
+                Example1:
+                  value:
+                    id: 309e5e64-7c5b-4433-a645-effa0683228e
+                    category:
+                      id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                      name: Fiddle Leaf Fig
+                    name: Quadi
+                    photoUrls:
+                      growing: >-
+                        https://i.ibb.co/vk5N4C4/EDAA47-FF-6921-41-EE-ABA1-13-DE3-FCDB4-C0-1-105-c.jpg
+                    status: available
+        '400':
+          description: ''
+        '404':
+          description: ''
+      summary: find
+      security: *ref_0
+    delete:
+      operationId: PlantService.delete
+      tags:
+        - Plant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlantId'
+          examples:
+            Example1:
+              value: 309e5e64-7c5b-4433-a645-effa0683228e
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+        '404':
+          description: ''
+      summary: delete
+      security: *ref_0
+components:
+  schemas:
+    OwnerId:
+      type: string
+      format: uuid
+    OwnerAge:
+      type: string
+      enum:
+        - child
+        - adult
+        - senior
+    PlantOwner:
+      oneOf:
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/StoreCustomer'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - customer
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/StoreEmployee'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - employee
+    StoreCustomer:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+        plants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plant'
+        lifetime_spend:
+          type: number
+          format: double
+        id:
+          $ref: '#/components/schemas/OwnerId'
+      required:
+        - name
+        - plants
+        - lifetime_spend
+        - id
+    StoreEmployee:
+      type: object
+      properties:
+        employeeId:
+          $ref: '#/components/schemas/EmployeeId'
+      required:
+        - employeeId
+      allOf:
+        - $ref: '#/components/schemas/StoreCustomer'
+    EmployeeId:
+      type: string
+      format: uuid
+      description: a unique identified for each store employee
+    PlantId:
+      type: string
+      format: uuid
+    CategoryId:
+      type: string
+      format: uuid
+    PlantCategory:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/CategoryId'
+        name:
+          type: string
+      required:
+        - id
+        - name
+    PlantStatus:
+      type: string
+      enum:
+        - available
+        - pending
+        - sold
+    Plant:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PlantId'
+        category:
+          $ref: '#/components/schemas/PlantCategory'
+        name:
+          type: string
+        photoUrls:
+          type: object
+          additionalProperties:
+            type: string
+        status:
+          $ref: '#/components/schemas/PlantStatus'
+      required:
+        - name
+        - photoUrls
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.plantstore.com
+    description: Production
+  - url: https://sandbox.plantstore.com
+    description: Sandbox

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: api
-  version: 0.0.12
+  title: Plant Store
+  version: 0.0.14
 paths:
   /owner/:
     post:
@@ -19,7 +19,7 @@ paths:
                 $ref: '#/components/schemas/PlantOwner'
         '400':
           description: ''
-      summary: add
+      summary: Add an owner
       security: &ref_0
         - BearerAuth: []
       requestBody:
@@ -70,7 +70,7 @@ paths:
       responses:
         '204':
           description: ''
-      summary: delete
+      summary: Delete an owner
       security: *ref_0
   /plant/:
     post:
@@ -84,7 +84,7 @@ paths:
           description: ''
         '405':
           description: ''
-      summary: add
+      summary: Add a plant
       security: *ref_0
       requestBody:
         required: true
@@ -161,7 +161,7 @@ paths:
           description: ''
         '404':
           description: ''
-      summary: find
+      summary: Find plant by ID
       security: *ref_0
     delete:
       operationId: PlantService.delete
@@ -183,7 +183,7 @@ paths:
           description: ''
         '404':
           description: ''
-      summary: delete
+      summary: Delete plant by ID
       security: *ref_0
 components:
   schemas:

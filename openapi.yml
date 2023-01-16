@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Plant Store
-  version: 0.0.14
+  version: 0.0.15
 paths:
   /owner/:
     post:
@@ -31,6 +31,7 @@ paths:
               properties:
                 name:
                   type: string
+                  example: Danny
                 age:
                   $ref: '#/components/schemas/OwnerAge'
                 plants:
@@ -99,6 +100,7 @@ paths:
                   $ref: '#/components/schemas/PlantCategory'
                 name:
                   type: string
+                  example: Quadi
                 photoUrls:
                   type: object
                   additionalProperties:
@@ -281,6 +283,7 @@ components:
           $ref: '#/components/schemas/PlantCategory'
         name:
           type: string
+          example: Quadi
         photoUrls:
           type: object
           additionalProperties:

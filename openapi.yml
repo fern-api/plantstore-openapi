@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Plant Store
-  version: 0.0.15
+  version: 0.0.16
 paths:
   /owner/:
     post:
@@ -19,6 +19,16 @@ paths:
                 $ref: '#/components/schemas/PlantOwner'
         '400':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - OwnerNotFoundError
       summary: Add an owner
       security: &ref_0
         - BearerAuth: []
@@ -58,7 +68,7 @@ paths:
                           https://i.ibb.co/vk5N4C4/EDAA47-FF-6921-41-EE-ABA1-13-DE3-FCDB4-C0-1-105-c.jpg
                       status: available
   /owner/{ownerId}:
-    post:
+    delete:
       operationId: OwnerService.delete
       tags:
         - Owner
@@ -85,6 +95,16 @@ paths:
           description: ''
         '405':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - InvalidResponseError
       summary: Add a plant
       security: *ref_0
       requestBody:
@@ -161,8 +181,28 @@ paths:
                     status: available
         '400':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - InvalidIdSuppliedError
         '404':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - PlantNotFoundError
       summary: Find plant by ID
       security: *ref_0
     delete:
@@ -183,8 +223,28 @@ paths:
           description: ''
         '400':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - InvalidIdSuppliedError
         '404':
           description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - PlantNotFoundError
       summary: Delete plant by ID
       security: *ref_0
 components:

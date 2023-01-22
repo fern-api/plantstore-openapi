@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Plant Store
-  version: 0.0.16
+  version: 0.0.17
 paths:
   /owner/:
     post:
@@ -191,6 +191,13 @@ paths:
                         type: string
                         enum:
                           - InvalidIdSuppliedError
+                      content:
+                        $ref: '#/components/schemas/InvalidId'
+              examples:
+                Example1:
+                  value:
+                    id: 309e5b94-7a5b-4433-a645-effa0699928a
+                    message: This PlantID doesn't match any ID in our system.
         '404':
           description: ''
           content:
@@ -233,6 +240,8 @@ paths:
                         type: string
                         enum:
                           - InvalidIdSuppliedError
+                      content:
+                        $ref: '#/components/schemas/InvalidId'
         '404':
           description: ''
           content:
@@ -353,6 +362,16 @@ components:
       required:
         - name
         - photoUrls
+    InvalidId:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PlantId'
+        message:
+          type: string
+      required:
+        - id
+        - message
   securitySchemes:
     BearerAuth:
       type: http

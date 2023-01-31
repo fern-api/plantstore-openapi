@@ -1,12 +1,12 @@
 openapi: 3.0.1
 info:
   title: Plant Store
-  version: 0.0.17
+  version: 0.0.18
 paths:
   /owner/:
     post:
       description: Add a new owner as a customer of the store.
-      operationId: OwnerService.add
+      operationId: ownerService.add
       tags:
         - Owner
       parameters: []
@@ -69,7 +69,7 @@ paths:
                       status: available
   /owner/{ownerId}:
     delete:
-      operationId: OwnerService.delete
+      operationId: ownerService.delete
       tags:
         - Owner
       parameters:
@@ -86,7 +86,7 @@ paths:
   /plant/:
     post:
       description: Add a new plant to the store.
-      operationId: PlantService.add
+      operationId: plantService.add
       tags:
         - Plant
       parameters: []
@@ -144,7 +144,7 @@ paths:
                   status: available
   /plant/{plantId}:
     get:
-      operationId: PlantService.find
+      operationId: plantService.find
       tags:
         - Plant
       parameters:
@@ -213,7 +213,7 @@ paths:
       summary: Find plant by ID
       security: *ref_0
     delete:
-      operationId: PlantService.delete
+      operationId: plantService.delete
       tags:
         - Plant
       parameters:
